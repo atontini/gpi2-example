@@ -1,0 +1,33 @@
+function printmachinefile(){
+  nodelist=$(echo $SLURM_JOB_NODELIST | sed 's/node//' )
+#  echo "#nodelist=$nodelist"
+  nodelist=$(echo $nodelist | cut -d "[" -f2 | cut -d "]" -f1)
+#  echo "#nodelist=$nodelist"
+  ntpn=$((SLURM_NTASKS  / SLURM_JOB_NUM_NODES))
+  IFS=','
+
+  read -ra ADDR <<< "$nodelist"    # str is read into an array as tokens separated by IFS
+  for elem in "${ADDR[@]}"; do    # access each element of array
+#    echo "#elem=$elem"
+    if echo $elem | grep -q "-"
+    then
+      first=$(echo $elem | cut -d "-" -f1 | sed 's/^0*//')
+      last=$(echo $elem | cut -d "-" -f2 | sed 's/^0*//')
+#      echo "#first=$first last=$last"
+      for (( nodeidx=first; nodeidx<=last; nodeidx++ ))
+      do
+        for (( j = 0; j < $ntpn; j++ ));
+        do
+          #echo "node0$nodeidx"
+          printf "node%02d\n" $nodeidx
+        done
+      done
+    else
+      for (( j = 0; j < $ntpn; j++ ));
+      do
+        printf "node%02d\n" $elem
+      done
+    fi
+  done
+}
+
