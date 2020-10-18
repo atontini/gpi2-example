@@ -1,6 +1,6 @@
 # GPI-2 Example
 
-This example project contains similar connections to the one I made for my internship  
+This example project emulates the message passing between threads that I made for my internship
 
 The project uses [GPI-2 API](http://github.com/cc-hpc-itwm/GPI-2) which implements the [GASPI specification](http://gaspi.de)  
 
