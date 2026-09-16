@@ -10,7 +10,7 @@ The source code is extensively commented and should be straightforward to follow
 
 ## Technologies
 
-- C/C++
+- C
 - GPI-2
 - GASPI
 - Multithreading
